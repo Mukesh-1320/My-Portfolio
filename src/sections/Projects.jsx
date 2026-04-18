@@ -107,7 +107,7 @@ export const Projects = () => {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-white p-3 rounded-full hover:scale-110 transition"
+                    className="bg-gray-700 p-3 rounded-full hover:scale-110 transition"
                   >
                     <FaGithub size={18} />
                   </a>
@@ -116,7 +116,7 @@ export const Projects = () => {
                     href={project.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-white p-3 rounded-full hover:scale-110 transition"
+                    className="bg-gray-700 p-3 rounded-full hover:scale-110 transition"
                   >
                     <ExternalLink size={18} />
                   </a>
