@@ -111,7 +111,7 @@ export const Footer = () => {
           </p>
 
           <p className="text-xs text-muted-foreground">
-            Built with ❤️ using React.js,Tailwind CSS & Framer Motion.
+            Built with using React.js,Tailwind CSS & Framer Motion.
           </p>
         </motion.div>
 
