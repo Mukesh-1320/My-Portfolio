@@ -8,8 +8,8 @@ const navLinks = [
   { href: "#about", label: "About" },
   { href: "#projects", label: "Projects" },
   { href: "#experience", label: "Experience" },
-  { href: "#testimonials", label: "Testimonials" },
-  { href: "#contact", label: "Contact" }, // ✅ added here also
+  { href: "#education", label: "Education" },
+  { href: "#contact", label: "Contact" }, //  added here also
 ];
 
 export const Navbar = () => {

@@ -42,12 +42,12 @@ export const Experience = () => {
   return (
     <section id="experience" className="py-32 relative overflow-hidden">
       
-      {/* 🌈 Background Glow */}
+      {/*  Background Glow */}
       <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl -translate-y-1/2"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         
-        {/* 🔥 Section Header */}
+        {/*  Section Header */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -73,7 +73,7 @@ export const Experience = () => {
           </p>
         </motion.div>
 
-        {/* 🔥 Timeline */}
+        {/*  Timeline */}
         <div className="relative">
 
           {/* Timeline Line */}
@@ -92,7 +92,7 @@ export const Experience = () => {
                 className="relative grid md:grid-cols-2 gap-8"
               >
                 
-                {/* 🔵 Timeline Dot */}
+                {/*  Timeline Dot */}
                 <div className="absolute left-0 md:left-1/2 top-2 w-4 h-4 bg-primary rounded-full -translate-x-1/2 ring-4 ring-background z-10">
                   {exp.current && (
                     <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-75"></span>
