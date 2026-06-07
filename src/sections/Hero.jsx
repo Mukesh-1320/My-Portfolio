@@ -100,7 +100,7 @@ export const Hero = () => {
               </Button>
 
               {/* FIXED DOWNLOAD BUTTON */}
-              <a href="/resume.pdf" download="resume.pdf">
+              <a href="/my-resume.pdf" download="my-resume.pdf">
                 <AnimatedBorderButton>
                   <Download className="w-5 h-5" />
                   Download CV
