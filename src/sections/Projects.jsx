@@ -27,7 +27,7 @@ const projects = [
     tech: ["Next.js", "PostgreSQL (Neon)", "Clerk", "Stripe", "Inngest", "ImageKit"],
     image: "/projects/gocart.png",
     github: "https://github.com/Mukesh-1320/gocart",
-    live: "https://chat-app-orcin-mu-19.vercel.app/login",
+    live: "https://gocart-chi-pearl.vercel.app",
   },
   {
     title: "Real Time Chat App",
