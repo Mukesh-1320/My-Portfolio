@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
-// 🔥 Animation Variant
+//  Animation Variant
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   show: (i = 1) => ({
@@ -18,8 +18,17 @@ const fadeUp = {
   }),
 };
 
-// 🔥 Projects Data
+//  Projects Data
 const projects = [
+   {
+    title: "Multi-Vendor E-Commerce Plateform",
+    description:
+      "Developed a marketplace where users open their own stores and sell products online, with admin approval for new stores.",
+    tech: ["Next.js", "PostgreSQL (Neon)", "Clerk", "Stripe", "Inngest", "ImageKit"],
+    image: "/projects/gocart.png",
+    github: "https://github.com/Mukesh-1320/gocart",
+    live: "https://chat-app-orcin-mu-19.vercel.app/login",
+  },
   {
     title: "Real Time Chat App",
     description:
