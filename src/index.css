@@ -63,6 +63,51 @@ body {
   outline-offset: 3px;
 }
 
+/* ---------- Tech slider ---------- */
+.slider-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 10%,
+    #000 90%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 10%,
+    #000 90%,
+    transparent
+  );
+}
+
+.slider-track {
+  display: flex;
+  width: max-content;
+  animation: slider-scroll 40s linear infinite;
+}
+
+.slider-track-reverse {
+  animation-direction: reverse;
+  animation-duration: 50s;
+}
+
+.slider:hover .slider-track {
+  animation-play-state: paused;
+}
+
+@keyframes slider-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider-track {
+    animation: none;
+  }
+}
+
 /* ---------- Surfaces ---------- */
 .glass {
   background: var(--glass);
@@ -207,5 +252,33 @@ body {
   }
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* ---------- Orbiting icons around the photo ---------- */
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.orbit {
+  animation: orbit-spin 45s linear infinite;
+}
+
+/* Spins the other way so each icon stays upright */
+.orbit-counter {
+  animation: orbit-spin 45s linear infinite reverse;
+}
+
+.orbit-wrap:hover .orbit,
+.orbit-wrap:hover .orbit-counter {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit,
+  .orbit-counter {
+    animation: none;
   }
 }

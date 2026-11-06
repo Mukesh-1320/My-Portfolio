@@ -1,21 +1,48 @@
 import { useRef } from "react";
-import { ArrowRight, ChevronDown, Download } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import {
+  SiGit,
+  SiGithubactions,
+  SiMongodb,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiPostgresql,
+  SiReact,
+  SiTailwindcss,
+  SiTypescript,
+  SiVercel,
+} from "react-icons/si";
 import { Button } from "@/components/Button";
 import { AnimatedBorderButton } from "../components/AnimatedBorderButton";
 
+// `color: null` uses the normal text colour (for black or white logos)
 const skills = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "Node.js",
-  "PostgreSQL",
-  "MongoDB",
-  "Vercel",
-  "Tailwind CSS",
-  "Git",
-  "GitHub Actions",
+  { name: "React", icon: SiReact, color: "#61DAFB" },
+  { name: "Next.js", icon: SiNextdotjs, color: null },
+  { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+  { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
+  { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
+  { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+  { name: "Vercel", icon: SiVercel, color: null },
+  { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
+  { name: "Git", icon: SiGit, color: "#F05032" },
+  { name: "GitHub Actions", icon: SiGithubactions, color: "#2088FF" },
 ];
+
+const skillsReversed = [...skills].reverse();
+
+// Icons that orbit the photo, spread evenly around the ring
+const orbitNames = ["React", "TypeScript", "Node.js", "MongoDB", "Next.js"];
+const orbitItems = orbitNames.map((name, i) => {
+  const skill = skills.find((s) => s.name === name);
+  const angle = ((-90 + i * (360 / orbitNames.length)) * Math.PI) / 180;
+  return {
+    skill,
+    left: 50 + 50 * Math.cos(angle),
+    top: 50 + 50 * Math.sin(angle),
+  };
+});
 
 const socials = [
   { icon: FaGithub, href: "https://github.com/Mukesh-1320", label: "GitHub" },
@@ -26,6 +53,37 @@ const socials = [
   },
   { icon: FaTwitter, href: "#", label: "Twitter" },
 ];
+
+const SliderCard = ({ skill }) => {
+  const Icon = skill.icon;
+  return (
+    <div className="shrink-0 pr-4">
+      <div className="group flex items-center gap-3 rounded-2xl glass px-4 py-3 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10">
+        <span className="grid h-10 w-10 place-items-center rounded-xl bg-muted transition-transform duration-300 group-hover:scale-110">
+          <Icon
+            className="h-5 w-5"
+            style={skill.color ? { color: skill.color } : undefined}
+            aria-hidden="true"
+          />
+        </span>
+        <span className="whitespace-nowrap font-semibold text-foreground">
+          {skill.name}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+// One row of the slider. The list is doubled so the loop has no gap.
+const SliderRow = ({ items, reverse = false }) => (
+  <div className={`slider-track ${reverse ? "slider-track-reverse" : ""}`}>
+    {[...items, ...items].map((skill, idx) => (
+      <div key={`${skill.name}-${idx}`} aria-hidden={idx >= items.length}>
+        <SliderCard skill={skill} />
+      </div>
+    ))}
+  </div>
+);
 
 export const Hero = () => {
   const sectionRef = useRef(null);
@@ -59,8 +117,8 @@ export const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-6 pt-32 pb-24 relative z-10">
-        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-14 lg:gap-16 items-center">
+      <div className="container mx-auto px-6 pt-32 pb-20 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-14 lg:gap-16 items-center">
           {/* Left column */}
           <div className="space-y-8">
             <span className="animate-fade-in inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-primary font-medium">
@@ -96,12 +154,13 @@ export const Hero = () => {
                 Contact me <ArrowRight className="w-5 h-5" />
               </Button>
 
-              <a href="/my-resume.pdf" download="my-resume.pdf">
-                <AnimatedBorderButton>
-                  <Download className="w-5 h-5" />
-                  Download CV
-                </AnimatedBorderButton>
-              </a>
+              <AnimatedBorderButton
+                href="/my-resume.pdf"
+                download="my-resume.pdf"
+              >
+                <Download className="w-5 h-5" />
+                Download CV
+              </AnimatedBorderButton>
             </div>
 
             {/* Social links */}
@@ -122,89 +181,97 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* Right column: profile in an arch frame */}
-          <div className="animate-fade-in animation-delay-300 relative">
-            <div className="relative mx-auto w-full max-w-72 sm:max-w-80 lg:max-w-88">
-              {/* Soft glow under the frame, kept inside its width */}
+          {/* Right column: round photo with orbiting tech icons */}
+          <div className="animate-fade-in animation-delay-300">
+            <div className="orbit-wrap relative mx-auto aspect-square w-full max-w-[20rem] sm:max-w-sm">
+              {/* Glow behind the photo */}
               <div
-                className="absolute inset-x-8 -bottom-3 h-20 rounded-full bg-primary/30 blur-3xl"
+                className="absolute inset-[16%] rounded-full bg-primary/30 blur-3xl"
                 aria-hidden="true"
               />
 
-              {/* Frame */}
-              <div className="relative rounded-t-full rounded-b-3xl p-2 glass glow-border">
-                <div className="relative overflow-hidden rounded-t-full rounded-b-2xl">
-                  <img
-                    src="/profile-photo.jpg"
-                    alt="Portrait of Mukesh Kumar"
-                    className="w-full aspect-4/5 object-cover object-top"
-                  />
+              {/* Thin static ring */}
+              <div
+                className="absolute inset-[12%] rounded-full border border-border"
+                aria-hidden="true"
+              />
 
-                  {/* Dark fade so the info bar stays readable */}
-                  <div
-                    className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/50 to-transparent"
-                    aria-hidden="true"
-                  />
+              {/* Orbit: dashed ring and the icons spinning around it */}
+              <div className="orbit absolute inset-6">
+                <div
+                  className="absolute inset-0 rounded-full border border-dashed border-primary/40"
+                  aria-hidden="true"
+                />
 
-                  {/* Info bar, inside the photo */}
-                  <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-xl glass-strong px-3.5 py-2.5">
-                    <div className="flex items-center gap-2.5">
-                      <span className="relative flex w-2.5 h-2.5">
-                        <span className="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-60 animate-ping motion-reduce:animate-none" />
-                        <span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-green-500" />
-                      </span>
-                      <span className="text-sm font-medium text-foreground">
-                        Available for work
-                      </span>
+                {orbitItems.map(({ skill, left, top }) => {
+                  const Icon = skill.icon;
+                  return (
+                    <div
+                      key={skill.name}
+                      className="absolute -translate-x-1/2 -translate-y-1/2"
+                      style={{ left: `${left}%`, top: `${top}%` }}
+                    >
+                      <div
+                        className="orbit-counter grid h-10 w-10 place-items-center rounded-xl glass-strong shadow-lg"
+                        title={skill.name}
+                      >
+                        <Icon
+                          className="h-5 w-5"
+                          style={skill.color ? { color: skill.color } : undefined}
+                          aria-label={skill.name}
+                        />
+                      </div>
                     </div>
+                  );
+                })}
+              </div>
 
-                    <div className="flex items-baseline gap-1 border-l border-border pl-3">
-                      <span className="text-base font-bold text-primary">
-                        1+
-                      </span>
-                      <span className="text-xs text-muted-foreground">
-                        yr exp.
-                      </span>
-                    </div>
-                  </div>
-                </div>
+              {/* Photo */}
+              <div className="absolute inset-[16%] rounded-full bg-linear-to-br from-primary to-highlight p-1 shadow-2xl shadow-primary/30">
+                <img
+                  src="/profile-photo.jpg"
+                  alt="Portrait of Mukesh Kumar"
+                  className="h-full w-full rounded-full object-cover object-top ring-4 ring-background"
+                />
+              </div>
+
+              {/* Status pill */}
+              <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 flex items-center gap-3 whitespace-nowrap rounded-full glass-strong px-4 py-2.5">
+                <span className="relative flex w-2.5 h-2.5">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-60 animate-ping motion-reduce:animate-none" />
+                  <span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-green-500" />
+                </span>
+                <span className="text-sm font-medium text-foreground">
+                  Available for work
+                </span>
+                <span className="border-l border-border pl-3 text-sm">
+                  <span className="font-bold text-primary">1+</span>{" "}
+                  <span className="text-xs text-muted-foreground">yr exp.</span>
+                </span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Skills marquee */}
-        <div className="mt-24 animate-fade-in animation-delay-600">
-          <p className="text-sm text-muted-foreground mb-6 text-center">
-            Tools I work with
-          </p>
-          <div className="marquee marquee-mask overflow-hidden">
-            <div className="flex animate-marquee">
-              {[...skills, ...skills].map((skill, idx) => (
-                <div
-                  key={idx}
-                  className="shrink-0 px-8 py-3"
-                  aria-hidden={idx >= skills.length}
-                >
-                  <span className="text-xl font-semibold text-foreground/35 hover:text-foreground transition-colors">
-                    {skill}
-                  </span>
-                </div>
-              ))}
-            </div>
+        {/* Tech slider: two rows moving in opposite directions */}
+        <div
+          className="mt-16 animate-fade-in animation-delay-600"
+          role="region"
+          aria-label="Technologies I work with"
+        >
+          <div className="mb-6 flex items-center gap-4">
+            <span className="h-px flex-1 bg-border" />
+            <p className="text-sm font-medium text-muted-foreground">
+              Tools I work with
+            </p>
+            <span className="h-px flex-1 bg-border" />
+          </div>
+
+          <div className="slider slider-mask space-y-4 overflow-hidden py-1">
+            <SliderRow items={skills} />
+            <SliderRow items={skillsReversed} reverse />
           </div>
         </div>
-      </div>
-
-      {/* Scroll cue */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in animation-delay-800 hidden md:block">
-        <a
-          href="#about"
-          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-        >
-          <span className="text-xs tracking-wide">Scroll</span>
-          <ChevronDown className="w-6 h-6 animate-bounce" />
-        </a>
       </div>
     </section>
   );

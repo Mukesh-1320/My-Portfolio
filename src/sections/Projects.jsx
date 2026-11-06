@@ -4,7 +4,7 @@ import { FaGithub } from "react-icons/fa";
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
+  show: { transition: { staggerChildren: 0.1 } },
 };
 
 const item = {
@@ -17,7 +17,7 @@ const projects = [
     title: "Multi-Vendor E-Commerce Platform",
     type: "Full-stack",
     description:
-      "A marketplace where users open their own stores and sell products online, with admin approval for every new store. Includes secure payments and image handling.",
+      "A marketplace where users open their own stores and sell products online, with admin approval for every new store, secure payments and image handling.",
     tech: [
       "Next.js",
       "PostgreSQL (Neon)",
@@ -62,102 +62,108 @@ const projects = [
   },
 ];
 
-const displayUrl = (url) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+const MAX_TECH = 4;
 
-const ProjectCard = ({ project, featured = false }) => (
-  <motion.article variants={item} className="min-w-0">
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-card border border-border hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-[border-color,box-shadow] duration-300"
-    >
-      {/* Accent line that grows across the top on hover */}
-      <span
-        aria-hidden="true"
-        className="absolute top-0 left-0 z-10 h-0.5 w-0 bg-linear-to-r from-primary to-highlight transition-all duration-500 group-hover:w-full"
-      />
+const ProjectCard = ({ project, index }) => {
+  const extra = project.tech.length - MAX_TECH;
 
-      {/* Screenshot inside a browser frame */}
-      <div className="p-3">
-        <div className="overflow-hidden rounded-xl border border-border bg-muted">
-          <div className="flex items-center gap-3 px-3 py-2 border-b border-border">
-            <div className="flex shrink-0 gap-1.5" aria-hidden="true">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
-            </div>
-            <span className="flex-1 min-w-0 truncate rounded-md bg-background/60 px-3 py-0.5 text-xs text-muted-foreground">
-              {displayUrl(project.live)}
-            </span>
-          </div>
-          <div className="aspect-video overflow-hidden">
-            <img
-              src={project.image}
-              alt={`${project.title} screenshot`}
-              loading="lazy"
-              className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-            />
-          </div>
-        </div>
-      </div>
+  return (
+    <motion.article variants={item} className="min-w-0">
+      <motion.div
+        whileHover={{ y: -6 }}
+        transition={{ type: "spring", stiffness: 300, damping: 22 }}
+        className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-card border border-border hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-[border-color,box-shadow] duration-300"
+      >
+        {/* Accent line that grows across the top on hover */}
+        <span
+          aria-hidden="true"
+          className="absolute top-0 left-0 z-20 h-0.5 w-0 bg-linear-to-r from-primary to-highlight transition-all duration-500 group-hover:w-full"
+        />
 
-      {/* Content */}
-      <div className="flex min-w-0 flex-1 flex-col p-5 pt-3 sm:p-6 sm:pt-3">
-        <div className="flex flex-wrap items-center gap-2 mb-3">
-          {featured && (
-            <span className="rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
-              Featured project
-            </span>
-          )}
-          <span className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+        {/* Screenshot */}
+        <div className="relative aspect-16/10 overflow-hidden bg-muted">
+          <img
+            src={project.image}
+            alt={`${project.title} screenshot`}
+            loading="lazy"
+            className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+          />
+
+          {/* Type chip */}
+          <span className="absolute left-3 top-3 rounded-full glass-strong px-3 py-1 text-xs font-medium text-foreground">
             {project.type}
+          </span>
+
+          {/* Number */}
+          <span
+            aria-hidden="true"
+            className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-md shadow-primary/30"
+          >
+            {String(index + 1).padStart(2, "0")}
           </span>
         </div>
 
-        <h3 className="font-display text-xl font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors wrap-break-word">
-          {project.title}
-        </h3>
+        {/* Content */}
+        <div className="flex min-w-0 flex-1 flex-col p-5">
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="font-display text-lg font-semibold leading-snug tracking-tight text-foreground group-hover:text-primary transition-colors wrap-break-word">
+              {project.title}
+            </h3>
+          </div>
 
-        <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-          {project.description}
-        </p>
-
-        <div className="mt-5 flex flex-wrap gap-2">
-          {project.tech.map((tech) => (
-            <span
-              key={tech}
-              className="rounded-md border border-border bg-muted px-2.5 py-1 text-xs font-medium text-foreground"
-            >
-              {tech}
+          {index === 0 && (
+            <span className="mt-2 w-fit rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+              Featured project
             </span>
-          ))}
-        </div>
+          )}
 
-        {/* Buttons are always visible, so they work on touch screens too */}
-        <div className="mt-auto flex flex-wrap gap-3 pt-6">
-          <a
-            href={project.live}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-105"
-          >
-            Live demo
-            <ArrowUpRight size={16} />
-          </a>
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-colors duration-300 hover:border-primary hover:text-primary"
-          >
-            <FaGithub size={16} />
-            Source code
-          </a>
+          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+            {project.description}
+          </p>
+
+          {/* Tech: first few, then a +N chip */}
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {project.tech.slice(0, MAX_TECH).map((tech) => (
+              <span
+                key={tech}
+                className="rounded-md border border-border bg-muted px-2 py-0.5 text-xs font-medium text-foreground"
+              >
+                {tech}
+              </span>
+            ))}
+            {extra > 0 && (
+              <span className="rounded-md border border-border px-2 py-0.5 text-xs font-medium text-muted-foreground">
+                +{extra}
+              </span>
+            )}
+          </div>
+
+          {/* Actions: always visible, so they work on touch screens too */}
+          <div className="mt-auto flex items-center gap-2 pt-5">
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-105"
+            >
+              Live demo
+              <ArrowUpRight size={15} />
+            </a>
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${project.title} source code`}
+              className="grid h-9 w-9 place-items-center rounded-full border border-border text-foreground transition-colors duration-300 hover:border-primary hover:text-primary"
+            >
+              <FaGithub size={16} />
+            </a>
+          </div>
         </div>
-      </div>
-    </motion.div>
-  </motion.article>
-);
+      </motion.div>
+    </motion.article>
+  );
+};
 
 export const Projects = () => {
   return (
@@ -176,7 +182,7 @@ export const Projects = () => {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.4 }}
-            className="mb-14 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end"
+            className="mb-12 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end"
           >
             <motion.h2
               variants={item}
@@ -197,20 +203,16 @@ export const Projects = () => {
             </motion.p>
           </motion.div>
 
-          {/* Cards: 1 per row on phones, 2 per row on larger screens */}
+          {/* Cards: 1 per row on phones, 2 on tablets, 3 on laptops */}
           <motion.div
             variants={container}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
-            className="grid grid-cols-1 gap-6 md:grid-cols-2"
+            className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3"
           >
             {projects.map((project, idx) => (
-              <ProjectCard
-                key={project.title}
-                project={project}
-                featured={idx === 0}
-              />
+              <ProjectCard key={project.title} project={project} index={idx} />
             ))}
           </motion.div>
 
