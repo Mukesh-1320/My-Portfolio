@@ -1,7 +1,8 @@
+import { useRef } from "react";
+import { ArrowRight, ChevronDown, Download } from "lucide-react";
+import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { Button } from "@/components/Button";
 import { AnimatedBorderButton } from "../components/AnimatedBorderButton";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { ArrowRight, ChevronDown, Download } from "lucide-react";
 
 const skills = [
   "React",
@@ -16,78 +17,74 @@ const skills = [
   "GitHub Actions",
 ];
 
-// Social Data
 const socials = [
-  { icon: FaGithub, href: "#" },
-  { icon: FaLinkedin, href: "#" },
-  { icon: FaTwitter, href: "#" },
+  { icon: FaGithub, href: "https://github.com/Mukesh-1320", label: "GitHub" },
+  {
+    icon: FaLinkedin,
+    href: "https://www.linkedin.com/in/mukeshkumar1320/",
+    label: "LinkedIn",
+  },
+  { icon: FaTwitter, href: "#", label: "Twitter" },
 ];
 
 export const Hero = () => {
+  const sectionRef = useRef(null);
+
+  // Moves the glowing part of the dot grid to follow the pointer.
+  const handlePointerMove = (e) => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty("--mx", `${e.clientX - rect.left}px`);
+    el.style.setProperty("--my", `${e.clientY - rect.top}px`);
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section
+      ref={sectionRef}
+      onPointerMove={handlePointerMove}
+      className="relative min-h-screen flex items-center overflow-hidden"
+    >
       {/* Background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {/* Optional photo, dark mode only */}
         <img
           src="/hero-bg.jpg"
-          alt="Hero"
-          className="w-full h-full object-cover opacity-40"
+          alt=""
+          className="hidden dark:block w-full h-full object-cover opacity-25"
         />
-        <div className="absolute inset-0 bg-linear-to-b from-background/20 via-background/80 to-background" />
-      </div>
-
-      {/* Green Dots */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(30)].map((_, i) => (
-          <div
-            className="absolute w-1.5 h-1.5 rounded-full opacity-60"
-            style={{
-              backgroundColor: "#20B2A6",
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `slow-drift ${
-                15 + Math.random() * 20
-              }s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`,
-            }}
-          />
-        ))}
+        <div className="absolute inset-0 hero-wash" />
+        <div className="absolute inset-0 hero-grid" />
+        <div className="absolute inset-0 hero-grid-lit" />
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-6 pt-32 pb-20 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Text Content */}
+      <div className="container mx-auto px-6 pt-32 pb-24 relative z-10">
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-14 lg:gap-16 items-center">
+          {/* Left column */}
           <div className="space-y-8">
-            <div className="animate-fade-in">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-primary">
-                <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                Full Stack Developer • React Developer
-              </span>
-            </div>
+            <span className="animate-fade-in inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-primary font-medium">
+              <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+              Full-stack and React developer
+            </span>
 
-            {/* Headline */}
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight animate-fade-in animation-delay-100">
-                Crafting <span className="text-primary glow-text">digital</span>
-                <br />
-                experiences with
-                <br />
-                <span className="font-serif italic font-normal text-white">
-                  precision.
+            <div className="space-y-6">
+              <h1 className="animate-fade-in animation-delay-100 font-display text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-semibold tracking-tight leading-[1.08] text-foreground">
+                Web apps built with care,
+                <span className="block text-muted-foreground">
+                  from database to browser.
                 </span>
               </h1>
-              <p className="text-medium text-muted-foreground max-w-lg animate-fade-in animation-delay-200">
-                Hi, I'm Mukesh Kumar — a full-stack developer and MCA graduate
-                who loves turning ideas into powerful web applications. I work
-                with React.js, Next.js, JavaScript, TypeScript, Node.js, and
-                MongoDB to build fast, scalable, and user-centric digital
-                experiences.
+
+              <p className="animate-fade-in animation-delay-200 text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
+                Hi, I&apos;m Mukesh Kumar, a full-stack developer and MCA
+                graduate. I use React, Next.js, TypeScript, Node.js and MongoDB
+                to build fast, scalable products that are easy to use.
               </p>
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-4 animate-fade-in animation-delay-300">
+            <div className="animate-fade-in animation-delay-300 flex flex-wrap gap-4">
               <Button
                 size="lg"
                 onClick={() => {
@@ -96,10 +93,9 @@ export const Hero = () => {
                   });
                 }}
               >
-                Contact Me <ArrowRight className="w-5 h-5" />
+                Contact me <ArrowRight className="w-5 h-5" />
               </Button>
 
-              {/* FIXED DOWNLOAD BUTTON */}
               <a href="/my-resume.pdf" download="my-resume.pdf">
                 <AnimatedBorderButton>
                   <Download className="w-5 h-5" />
@@ -108,59 +104,68 @@ export const Hero = () => {
               </a>
             </div>
 
-            {/* Social Links */}
-            <div className="flex items-center gap-4 animate-fade-in animation-delay-400">
-              <span className="text-sm text-muted-foreground">Follow me: </span>
-              {[
-                { icon: FaGithub, href: "https://github.com/" },
-                {
-                  icon: FaLinkedin,
-                  href: "https://www.linkedin.com/in/mukeshkumar1320/",
-                },
-                { icon: FaTwitter, href: "#" },
-              ].map((social, idx) => (
+            {/* Social links */}
+            <div className="animate-fade-in animation-delay-400 flex items-center gap-4">
+              <span className="text-sm text-muted-foreground">Find me on</span>
+              {socials.map(({ icon: Icon, href, label }) => (
                 <a
-                  key={idx}
-                  href={social.href}
-                  className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all duration-300"
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-full glass text-foreground/80 hover:text-primary hover:border-primary/50 transition-colors duration-300"
                 >
-                  {<social.icon className="w-5 h-5" />}
+                  <Icon className="w-5 h-5" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Right Column - Profile Image */}
-          <div className="relatice animate-fade-in animation-delay-300">
-            {/* Profile Image */}
-            <div className="relative max-w-md mx-auto">
+          {/* Right column: profile in an arch frame */}
+          <div className="animate-fade-in animation-delay-300 relative">
+            <div className="relative mx-auto w-full max-w-72 sm:max-w-80 lg:max-w-88">
+              {/* Soft glow under the frame, kept inside its width */}
               <div
-                className="absolute inset-0 
-              rounded-3xl bg-linear-to-br 
-              from-primary/30 via-transparent 
-              to-primary/10 blur-2xl animate-pulse"
+                className="absolute inset-x-8 -bottom-3 h-20 rounded-full bg-primary/30 blur-3xl"
+                aria-hidden="true"
               />
-              <div className="relative glass rounded-3xl p-2 glow-border">
-                <img
-                  src="/profile-photo.jpg"
-                  alt="Pedro Machado"
-                  className="w-full aspect-4/5 object-cover rounded-2xl"
-                />
 
-                {/* Floating Badge */}
-                <div className="absolute -bottom-4 -right-4 glass rounded-xl px-4 py-3 animate-float">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-sm font-medium">
-                      Available for work
-                    </span>
-                  </div>
-                </div>
-                {/* Stats Badge */}
-                <div className="absolute -top-4 -left-4 glass rounded-xl px-4 py-3 animate-float animation-delay-500">
-                  <div className="text-2xl font-bold text-primary">1+</div>
-                  <div className="text-xs text-muted-foreground">
-                    Years Exp.
+              {/* Frame */}
+              <div className="relative rounded-t-full rounded-b-3xl p-2 glass glow-border">
+                <div className="relative overflow-hidden rounded-t-full rounded-b-2xl">
+                  <img
+                    src="/profile-photo.jpg"
+                    alt="Portrait of Mukesh Kumar"
+                    className="w-full aspect-4/5 object-cover object-top"
+                  />
+
+                  {/* Dark fade so the info bar stays readable */}
+                  <div
+                    className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/50 to-transparent"
+                    aria-hidden="true"
+                  />
+
+                  {/* Info bar, inside the photo */}
+                  <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-xl glass-strong px-3.5 py-2.5">
+                    <div className="flex items-center gap-2.5">
+                      <span className="relative flex w-2.5 h-2.5">
+                        <span className="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-60 animate-ping motion-reduce:animate-none" />
+                        <span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-green-500" />
+                      </span>
+                      <span className="text-sm font-medium text-foreground">
+                        Available for work
+                      </span>
+                    </div>
+
+                    <div className="flex items-baseline gap-1 border-l border-border pl-3">
+                      <span className="text-base font-bold text-primary">
+                        1+
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        yr exp.
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -168,24 +173,20 @@ export const Hero = () => {
           </div>
         </div>
 
-        {/* Skills Section */}
-        <div className="mt-20 animate-fade-in animation-delay-600">
+        {/* Skills marquee */}
+        <div className="mt-24 animate-fade-in animation-delay-600">
           <p className="text-sm text-muted-foreground mb-6 text-center">
-            Skills I work with
+            Tools I work with
           </p>
-          <div className="relative overflow-hidden">
-            <div
-              className="absolute left-0 top-0 bottom-0 w-32
-             bg-linear-to-r from-background to-transparent z-10"
-            />
-            <div
-              className="absolute right-0 top-0 bottom-0 w-32
-             bg-linear-to-l from-background to-transparent z-10"
-            />
+          <div className="marquee marquee-mask overflow-hidden">
             <div className="flex animate-marquee">
               {[...skills, ...skills].map((skill, idx) => (
-                <div key={idx} className="shrink-0 px-8 py-4">
-                  <span className="text-xl font-semibold text-muted-foreground/50 hover:text-muted-foreground transition-colors">
+                <div
+                  key={idx}
+                  className="shrink-0 px-8 py-3"
+                  aria-hidden={idx >= skills.length}
+                >
+                  <span className="text-xl font-semibold text-foreground/35 hover:text-foreground transition-colors">
                     {skill}
                   </span>
                 </div>
@@ -195,15 +196,13 @@ export const Hero = () => {
         </div>
       </div>
 
-      <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 
-      animate-fade-in animation-delay-800"
-      >
+      {/* Scroll cue */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in animation-delay-800 hidden md:block">
         <a
           href="#about"
-          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
+          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
         >
-          <span className="text-xs uppercase tracking-wider">Scroll</span>
+          <span className="text-xs tracking-wide">Scroll</span>
           <ChevronDown className="w-6 h-6 animate-bounce" />
         </a>
       </div>
