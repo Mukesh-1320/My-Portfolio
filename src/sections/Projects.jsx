@@ -1,5 +1,5 @@
 import { motion, MotionConfig } from "framer-motion";
-import { ArrowUpRight, FolderGit2 } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
 const container = {
@@ -62,36 +62,10 @@ const projects = [
   },
 ];
 
-// SAMPLE ENTRIES: replace these with your own projects.
-// Leave `live` as "" if a project has no live demo (the button is hidden).
-const moreProjects = [
-  {
-    title: "Task Manager",
-    description: "Create, edit and track daily tasks with filters.",
-    tech: ["React", "Node.js", "MongoDB"],
-    github: "https://github.com/Mukesh-1320",
-    live: "",
-  },
-  {
-    title: "Weather App",
-    description: "Live weather and forecast for any city.",
-    tech: ["React", "REST API"],
-    github: "https://github.com/Mukesh-1320",
-    live: "",
-  },
-  {
-    title: "Blog REST API",
-    description: "Secure API with login, posts and comments.",
-    tech: ["Node.js", "Express", "JWT"],
-    github: "https://github.com/Mukesh-1320",
-    live: "",
-  },
-];
-
 const displayUrl = (url) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
 const ProjectCard = ({ project, featured = false }) => (
-  <motion.article variants={item}>
+  <motion.article variants={item} className="min-w-0">
     <motion.div
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
@@ -107,7 +81,7 @@ const ProjectCard = ({ project, featured = false }) => (
       <div className="p-3">
         <div className="overflow-hidden rounded-xl border border-border bg-muted">
           <div className="flex items-center gap-3 px-3 py-2 border-b border-border">
-            <div className="flex gap-1.5" aria-hidden="true">
+            <div className="flex shrink-0 gap-1.5" aria-hidden="true">
               <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
               <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
               <span className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
@@ -128,7 +102,7 @@ const ProjectCard = ({ project, featured = false }) => (
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col p-6 pt-3">
+      <div className="flex min-w-0 flex-1 flex-col p-5 pt-3 sm:p-6 sm:pt-3">
         <div className="flex flex-wrap items-center gap-2 mb-3">
           {featured && (
             <span className="rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
@@ -140,7 +114,7 @@ const ProjectCard = ({ project, featured = false }) => (
           </span>
         </div>
 
-        <h3 className="font-display text-xl font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">
+        <h3 className="font-display text-xl font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors wrap-break-word">
           {project.title}
         </h3>
 
@@ -185,64 +159,6 @@ const ProjectCard = ({ project, featured = false }) => (
   </motion.article>
 );
 
-/* Compact card for smaller projects */
-const SmallCard = ({ project }) => (
-  <motion.article variants={item}>
-    <motion.div
-      whileHover={{ y: -5 }}
-      transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-card border border-border p-5 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-[border-color,box-shadow] duration-300"
-    >
-      <span
-        aria-hidden="true"
-        className="absolute top-0 left-0 h-0.5 w-0 bg-linear-to-r from-primary to-highlight transition-all duration-500 group-hover:w-full"
-      />
-
-      <div className="flex items-start justify-between gap-3">
-        <div className="w-10 h-10 shrink-0 rounded-xl bg-linear-to-br from-primary to-highlight text-primary-foreground grid place-items-center shadow-md shadow-primary/25 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110">
-          <FolderGit2 className="w-5 h-5" />
-        </div>
-
-        <div className="flex items-center gap-1">
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${project.title} source code`}
-            className="p-2 rounded-full text-muted-foreground hover:text-primary hover:bg-muted transition-colors"
-          >
-            <FaGithub size={18} />
-          </a>
-          {project.live && (
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${project.title} live demo`}
-              className="p-2 rounded-full text-muted-foreground hover:text-primary hover:bg-muted transition-colors"
-            >
-              <ArrowUpRight size={18} />
-            </a>
-          )}
-        </div>
-      </div>
-
-      <h4 className="mt-4 font-display text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
-        {project.title}
-      </h4>
-      <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
-        {project.description}
-      </p>
-
-      <div className="mt-auto flex flex-wrap gap-x-3 gap-y-1 pt-4 text-xs font-medium text-primary">
-        {project.tech.map((tech) => (
-          <span key={tech}>{tech}</span>
-        ))}
-      </div>
-    </motion.div>
-  </motion.article>
-);
-
 export const Projects = () => {
   return (
     <MotionConfig reducedMotion="user">
@@ -260,7 +176,7 @@ export const Projects = () => {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.4 }}
-            className="mb-14 grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end"
+            className="mb-14 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end"
           >
             <motion.h2
               variants={item}
@@ -281,13 +197,13 @@ export const Projects = () => {
             </motion.p>
           </motion.div>
 
-          {/* Main cards: 2 per row, all the same size */}
+          {/* Cards: 1 per row on phones, 2 per row on larger screens */}
           <motion.div
             variants={container}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.1 }}
-            className="grid gap-6 md:grid-cols-2"
+            className="grid grid-cols-1 gap-6 md:grid-cols-2"
           >
             {projects.map((project, idx) => (
               <ProjectCard
@@ -297,7 +213,6 @@ export const Projects = () => {
               />
             ))}
           </motion.div>
-
 
           {/* More on GitHub */}
           <div className="mt-12 text-center">
