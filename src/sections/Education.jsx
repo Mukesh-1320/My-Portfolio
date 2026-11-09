@@ -21,8 +21,6 @@ const education = [
     level: "Master's degree",
     degree: "Master of Computer Applications (MCA)",
     institution: "University Institute of Technology, RGPV",
-    period: "2023 – 2026",
-    duration: "3 years",
     status: "Graduated 2026",
     description:
       "Completed my MCA with a specialization in software development, web technologies, database management systems and computer networks.",
@@ -38,7 +36,6 @@ const education = [
     degree: "Bachelor of Computer Applications (BCA)",
     institution: "Prestige Institute of Management, Gwalior",
     period: "2018 – 2021",
-    duration: "3 years",
     status: "Graduated 2021",
     description:
       "Studied programming fundamentals, mathematics and core computer science concepts.",

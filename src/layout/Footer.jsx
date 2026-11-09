@@ -45,9 +45,13 @@ export const Footer = () => {
   return (
     <MotionConfig reducedMotion="user">
       <footer className="relative overflow-hidden border-t border-border pt-20">
-        {/* Background glow */}
+        {/* Background glows */}
         <div
           className="absolute -top-24 left-1/2 w-xl h-72 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl -z-10"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute bottom-0 -right-24 w-80 h-80 rounded-full bg-highlight/10 blur-3xl -z-10"
           aria-hidden="true"
         />
 
@@ -58,10 +62,10 @@ export const Footer = () => {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
-            className="grid gap-12 lg:grid-cols-[1.4fr_0.8fr_0.8fr]"
+            className="grid grid-cols-1 gap-12 lg:grid-cols-[1.4fr_0.8fr_0.8fr]"
           >
             {/* Brand */}
-            <motion.div variants={item} className="space-y-6">
+            <motion.div variants={item} className="min-w-0 space-y-6">
               <div className="flex items-center gap-3">
                 <span className="grid place-items-center w-11 h-11 rounded-xl bg-linear-to-br from-primary to-highlight text-primary-foreground font-display font-bold text-xl shadow-lg shadow-primary/25">
                   M
@@ -107,20 +111,20 @@ export const Footer = () => {
             </motion.nav>
 
             {/* Connect */}
-            <motion.div variants={item}>
+            <motion.div variants={item} className="min-w-0">
               <h3 className="mb-5 font-display font-semibold text-foreground">
                 Connect
               </h3>
 
               <a
                 href="mailto:mk8520889@gmail.com"
-                className="group inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+                className="group inline-flex max-w-full items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
               >
-                <Mail size={16} className="text-primary" />
-                mk8520889@gmail.com
+                <Mail size={16} className="shrink-0 text-primary" />
+                <span className="truncate">mk8520889@gmail.com</span>
                 <ArrowUpRight
                   size={14}
-                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
               </a>
 
@@ -142,21 +146,22 @@ export const Footer = () => {
             </motion.div>
           </motion.div>
 
-          {/* Large name that fades out at the bottom */}
+          {/* Large name: two lines on phones, one line from tablet up */}
           <div
             aria-hidden="true"
-            className="mt-16 select-none overflow-hidden text-center font-display font-bold leading-[0.85] whitespace-nowrap text-[13vw] text-transparent [-webkit-text-stroke:1.5px_var(--color-primary)] opacity-40"
+            className="mt-12 select-none overflow-hidden pb-2 text-center font-display font-bold leading-none text-[22vw] text-transparent opacity-40 [-webkit-text-stroke:1.5px_var(--color-primary)] sm:mt-16 sm:whitespace-nowrap sm:text-[13vw]"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to bottom, #000 25%, transparent 90%)",
-              maskImage: "linear-gradient(to bottom, #000 25%, transparent 90%)",
+                "linear-gradient(to bottom, #000 25%, transparent 95%)",
+              maskImage: "linear-gradient(to bottom, #000 25%, transparent 95%)",
             }}
           >
-            Mukesh Kumar
+            Mukesh <br className="sm:hidden" />
+            Kumar
           </div>
 
           {/* Bottom bar */}
-          <div className="relative z-10 flex flex-col items-center justify-between gap-4 border-t border-border py-6 md:flex-row">
+          <div className="relative z-10 flex flex-col items-center justify-between gap-4 border-t border-border py-6 text-center md:flex-row md:text-left">
             <p className="text-sm text-muted-foreground">
               © {currentYear} Mukesh Kumar. All rights reserved.
             </p>

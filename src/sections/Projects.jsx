@@ -50,16 +50,6 @@ const projects = [
     github: "https://github.com/Mukesh-1320/Tour.github.io",
     live: "https://mukesh-1320.github.io/Tour.github.io/",
   },
-  {
-    title: "Portfolio Website",
-    type: "Frontend",
-    description:
-      "This portfolio: an animated, responsive site with light and dark themes.",
-    tech: ["React.js", "Tailwind", "Framer Motion"],
-    image: "/projects/project3.png",
-    github: "https://github.com/Mukesh-1320/My-Portfolio",
-    live: "https://my-portfolio-pi-six-ot0npg87dk.vercel.app/",
-  },
 ];
 
 const MAX_TECH = 4;
